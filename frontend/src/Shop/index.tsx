@@ -41,7 +41,7 @@ interface PaymentDTO {
 // Make TS accept the existence of our window.__ENV object - defined in index.html:
 interface WindowWithEnv extends Window {
   __ENV?: {
-    backendURL: string, // REACT_APP_BACKEND_URL environment variable
+    backendURL: string, // window.__ENV.REACT_APP_BACKEND_URL,
     sandbox: "true" | "false", // REACT_APP_SANDBOX_SDK environment variable - string, not boolean!
   }
 }
@@ -59,6 +59,7 @@ export default function Shop() {
 
   const signIn = async () => {
     const scopes = ['username', 'payments'];
+    console.log('Url: ', backendURL)
     const authResult: AuthResult = await window.Pi.authenticate(scopes, onIncompletePaymentFound);
     signInUser(authResult);
     setUser(authResult.user);
